@@ -1,0 +1,33 @@
+<script src="https://cdn1.adoberesources.net/alloy/latest/alloy.min.js"></script>
+<script>
+  alloy("configure", {
+    edgeConfigId: "YOUR_EDGE_CONFIG_ID",
+    orgId: "YOUR_ORG_ID",
+    debugEnabled: false
+  });
+
+  // Send identity: ECID + loyaltyId
+  alloy("sendEvent", {
+    type: "decisioning.propositionFetch",
+    xdm: {
+      identityMap: {
+        ECID: [{ id: "${ECID}" }],
+        loyaltyId: [{ id: "${LOYALTY_ID}" }]
+      }
+    },
+    decisionScopes: ["informational-cards"],
+    data: {
+      // request only metadata to ensure content is not assembled at Edge
+      request: { contentOnly: false }
+    }
+  }).then((result) => {
+    const cards = result?.propositions?.[0]?.items || [];
+    // Each item example:
+    // {
+    //   cardId: "personal-cup",
+    //   contentUrl: "https://publish.example.aem.cloud/content/cards/personal-cup.json",
+    //   state: { progress: 3, status: "in_progress", expiry: "2025-12-31" }
+    // }
+    window.__cards = cards;
+  });
+</script>
