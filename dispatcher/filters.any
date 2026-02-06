@@ -1,0 +1,1 @@
+/0100 { /type "allow" /url "/content/cards/*.json" }

@@ -1,0 +1,12 @@
+/cache {
+  /rules {
+    /0000 { /glob "*" /type "deny" }
+    /0100 { /glob "/content/cards/*.json" /type "allow" }
+  }
+  /headers {
+    "Cache-Control"
+    "Content-Type"
+    "Last-Modified"
+    "ETag"
+  }
+}
